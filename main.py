@@ -1,5 +1,5 @@
 from tkinter import *
-from text_tools.text_inputs_surface import textInputsSurface
+from surfaces.text_inputs_surface import textInputsSurface
 
 
 if  __name__ == '__main__':
