@@ -1,4 +1,5 @@
 感觉一下载，这个java的环境搭建不起来，还得一个点一个点地磨
 python中也有这种frame和label，所以我知道是什么
+这个headerLabel是一个新的实例
 
 创业 98
