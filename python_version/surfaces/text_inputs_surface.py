@@ -15,6 +15,10 @@ class textInputsSurface():
         self.lb.config(text='请写下你此时的心情......')
         # 生成text输入框
         self.user_inputs = Text(self.root, height=13)
+        self.scroll = Scrollbar()
+        self.scroll.pack(side=RIGHT, fill=Y)
+        self.scroll.config(command=self.user_inputs.yview)
+        self.user_inputs.config(yscrollcommand=self.scroll.set)
         self.user_inputs.pack()
         # save
         self.save_button = Button(self.root, text='save', command=self.save_text_inputs)
@@ -32,7 +36,7 @@ class textInputsSurface():
         # save功能
         text = self.user_inputs.get("1.0", "end")
         # 把text保存到项目文件里面
-        with open("./python_version/user data/text.txt", mode='a', encoding='utf-8') as file:
+        with open("./user data/text.txt", mode='a', encoding='utf-8') as file:
             file.write(text)
         # save and exit功能 todo
 
@@ -61,7 +65,7 @@ class textInputsSurface():
         # 删除inputs里面的内容
         self.user_inputs.delete("1.0", "end")
         # 显示历史内容
-        with open('./python_version/user data/text.txt', encoding='utf-8') as file:
+        with open('./user data/text.txt', encoding='utf-8') as file:
             data = file.read()
             self.user_inputs.insert("1.0", data)
 
