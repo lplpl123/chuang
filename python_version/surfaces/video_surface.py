@@ -1,0 +1,2 @@
+class videoSurface:
+    pass

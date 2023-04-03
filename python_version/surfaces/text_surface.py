@@ -8,8 +8,8 @@ class textInputsSurface():
         self.btn = btn
         self.root = root
 
-    def create_text_inputs(self):
-        # 隐藏上一界面的组件
+    def create_surface(self):
+        # 隐藏主界面的组件
         self.btn.place_forget()
         # 更改提示语
         self.lb.config(text='请写下你此时的心情......')
