@@ -13,7 +13,7 @@ def setup():
     lb = Label(root, text='请开始你的创作......')
     lb.pack()
     # start按钮
-    btn = Button(root, text='start')
+    btn = Button(root, text='start', relief=FLAT)
     # 初始化各界面
     text_surface = textInputsSurface(lb, btn, root)
     photograph_surface = photographSurface(lb, btn, root)
