@@ -1,8 +1,10 @@
+import os
 from tkinter import *
 from surfaces.text_surface import textInputsSurface
 from surfaces.photograph_surface import photographSurface
 from surfaces.video_surface import videoSurface
 from surfaces.audio_surface import audioSurface
+from tools import play_gif
 
 
 def setup():
@@ -14,6 +16,8 @@ def setup():
     lb.pack()
     # start按钮
     btn = Button(root, text='start', relief=FLAT)
+    # test
+    play_gif.decomposePics("./resources/start.gif")
     # 初始化各界面
     text_surface = textInputsSurface(lb, btn, root)
     photograph_surface = photographSurface(lb, btn, root)
@@ -23,6 +27,9 @@ def setup():
     # start按钮
     btn.config(command=lambda : surfaces[1].create_surface()) # todo 还在开发测试阶段，暂时只用一个功能
     btn.place(relx=0.5, rely=0.5, anchor='center')
+    # test
+    i = 1
+    play_gif.playgif(i, root, btn)
     # 运行程序
     root.mainloop()
 

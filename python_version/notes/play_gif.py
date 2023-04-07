@@ -76,7 +76,7 @@ class playGif():
         else:
             return frame + 1
 
-    def playGif(self, tk, widget, time=100):
+    def playGif(self, tk, widget, time=50):
         img = self.getPicture()
         widget.config(image=img)
         widget.image = img

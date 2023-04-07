@@ -14,3 +14,8 @@
 5. 如何打包这个程序？
 
 6. 实现tkinter.Label、Button加载gif动态图。
+
+7. 现在各大应用商城的app主要是用什么开发的？
+    instagram就是用python开发的，还有spotify/豆瓣/youtube/火狐
+    使用c++/java: 阿里巴巴、淘宝
+
