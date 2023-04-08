@@ -10,7 +10,7 @@ class mainSurface:
     def __init__(self, root):
         self.lb = Label(root, text='请开始你的创作......')
         self.lb.pack()
-        self.start_button = Button(root, text='start', relief=FLAT)
+        self.start_button = Button(root, text='start', relief=FLAT, bd=0)
         # 初始化各界面
         self.text_surface = textInputsSurface(self.lb, self.start_button, root)
         self.photograph_surface = photographSurface(self.lb, self.start_button, root)

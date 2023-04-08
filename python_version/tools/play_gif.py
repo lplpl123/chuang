@@ -23,5 +23,5 @@ def playgif(i, tk, btn, time=50):
         i += 1
         tk.after(time, playgif, i, tk, btn, time)
     except:
-        i = 0
+        pass
 
