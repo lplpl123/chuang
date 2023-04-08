@@ -16,9 +16,12 @@ def decomposePics(image_path):
         i += 1
 
 def playgif(i, tk, btn, time=50):
-    img = PhotoImage(file="./tem/tem_storage/frame{}.png".format(i))
-    btn.config(image=img)
-    btn.img = img
-    i += 1
-    tk.after(time, playgif, i, tk, btn, time)
+    try:
+        img = PhotoImage(file="./tem/tem_storage/frame{}.png".format(i))
+        btn.config(image=img)
+        btn.img = img
+        i += 1
+        tk.after(time, playgif, i, tk, btn, time)
+    except:
+        i = 0
 
