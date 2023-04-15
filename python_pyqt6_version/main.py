@@ -1,17 +1,13 @@
-import sys
 from PyQt6 import QtWidgets
+from tools import setup
 
 
 if __name__ == "__main__":
-    chuang = QtWidgets.QApplication(sys.argv)
 
-    root = QtWidgets.QDialog()
-    root.resize(480, 240)
-
+    root, chuang = setup.setup()
     hbox = QtWidgets.QHBoxLayout()
-    button =  QtWidgets.QPushButton("start")
+    button = QtWidgets.QPushButton("start")
     hbox.addWidget(button)
     root.setLayout(hbox)
+    setup.run(root, chuang)
 
-    root.show()
-    sys.exit(chuang.exec())
