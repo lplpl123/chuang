@@ -1,4 +1,5 @@
 from tkinter import *
+from tools import play_gif
 
 
 class textInputsSurface():
@@ -9,6 +10,8 @@ class textInputsSurface():
         self.root = root
 
     def create_surface(self):
+        # 停止播放上一个界面的动画
+        self.root.after_cancel(play_gif.playgif)
         # 隐藏主界面的组件
         self.btn.place_forget()
         # 更改提示语
@@ -51,6 +54,8 @@ class textInputsSurface():
         self.show_button.place_forget()
         # 显示组件
         self.btn.place(relx=0.5, rely=0.5, anchor='center')
+        i = 1
+        play_gif.playgif(i, self.root, self.btn)
 
     def complete_task(self):
         # 直接调用存储函数

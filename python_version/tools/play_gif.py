@@ -15,13 +15,17 @@ def decomposePics(image_path):
         frame.save(os.path.join("./tem/tem_storage", "frame{}.png".format(i+1)))
         i += 1
 
-def playgif(i, tk, btn, time=50):
+def playgif(i, tk, btn, time=50, play_or_not=True):
+    global loop
     try:
+        if not play_or_not:
+            tk.after_cancel(loop)
+            return
         img = PhotoImage(file="./tem/tem_storage/frame{}.png".format(i))
         btn.config(image=img)
         btn.img = img
         i += 1
-        tk.after(time, playgif, i, tk, btn, time)
+        loop = tk.after(time, playgif, i, tk, btn, time, play_or_not)
     except:
         pass
 

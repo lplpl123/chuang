@@ -8,9 +8,15 @@ from tools import play_gif
 
 class mainSurface:
     def __init__(self, root):
-        self.lb = Label(root, text='请开始你的创作......')
+        self.lb = Label(root, text='请开始你的创作......', bg="#171841", fg="white", font=('方正舒体', '14', 'normal'))
         self.lb.pack()
         self.start_button = Button(root, text='start', relief=FLAT, bd=0)
+        # start按钮
+        self.start_button.config(command=lambda: self.surfaces[2].create_surface())  # todo 还在开发测试阶段，暂时只用一个功能
+        self.start_button.place(relx=0.5, rely=0.5, anchor='center')
+        # test 分解gif
+        play_gif.decomposePics("./resources/start.gif")
+        self.decoration(root)
         # 初始化各界面
         self.text_surface = textInputsSurface(self.lb, self.start_button, root)
         self.photograph_surface = photographSurface(self.lb, self.start_button, root)
@@ -20,14 +26,8 @@ class mainSurface:
                     self.photograph_surface,
                     self.video_surface,
                     self.audio_surface]     # todo 随机取函数
-        # start按钮
-        self.start_button.config(command=lambda: self.surfaces[1].create_surface())  # todo 还在开发测试阶段，暂时只用一个功能
-        self.start_button.place(relx=0.5, rely=0.5, anchor='center')
-        self.decoration(root)
 
     def decoration(self, root):
-        # test 分解gif
-        play_gif.decomposePics("./resources/start.gif")
         # test
         i = 1
         play_gif.playgif(i, root, self.start_button)
