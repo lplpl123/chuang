@@ -24,9 +24,11 @@ class mainSurface:
         self.decoration(self.root)
 
     def choose_task(self):
+        if self.count == 1:
+            self.surface = random_task(self.surfaces)
         if self.count == self.task_num:
             self.lb.config(text='今日创作已完成......')
-        if 用户创建了数据: # todo- 这里肯定是要写一个函数的
+        if self.check_if_task_completed():
             self.surface = random_task(self.surfaces)
             self.surface.create_surface()
             self.count += 1
@@ -37,3 +39,7 @@ class mainSurface:
         # test
         i = 1
         play_gif.playgif(i, root, self.start_button)
+
+    def check_if_task_completed(self):
+        # 检查用户数据里面是否存在今天修改的数据
+        pass
