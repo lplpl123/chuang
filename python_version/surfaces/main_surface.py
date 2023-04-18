@@ -5,8 +5,10 @@ from tools.setup import setup_surfaces
 
 
 class mainSurface:
-    def __init__(self, root):
+    def __init__(self, root, task_num):
         self.root = root
+        self.task_num = task_num
+        self.count = 1
         self.setup_mainsurface()
         self.surfaces = setup_surfaces(self.lb, self.start_button, self.root)
 
@@ -22,8 +24,14 @@ class mainSurface:
         self.decoration(self.root)
 
     def choose_task(self):
-        self.surface = random_task(self.surfaces)
-        self.surface.create_surface()
+        if self.count == self.task_num:
+            self.lb.config(text='今日创作已完成......')
+        if 用户创建了数据: # todo- 这里肯定是要写一个函数的
+            self.surface = random_task(self.surfaces)
+            self.surface.create_surface()
+            self.count += 1
+        else:
+            self.surface.create_surface()
 
     def decoration(self, root):
         # test
