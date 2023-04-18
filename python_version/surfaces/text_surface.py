@@ -44,10 +44,13 @@ class textInputsSurface():
         # save and exit功能 todo
 
     def exit_text_inputs(self):
+        # 停止播放动画
+        play_gif.playgif(1, self.root, self.btn, play_or_not=False)
         # 更改提示语
         self.lb.config(text='请开始你的创作......')
         # 隐藏组件
         self.user_inputs.pack_forget()
+        self.scroll.pack_forget()
         self.save_button.place_forget()
         self.exit_button.place_forget()
         self.complete_button.place_forget()

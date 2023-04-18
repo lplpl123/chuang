@@ -1,4 +1,4 @@
-x = ""
+x = {}
 if x:
     print(1)
 else:
