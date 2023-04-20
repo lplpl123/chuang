@@ -4,6 +4,7 @@ from tkinter import *
 from tools import play_gif
 from tools.random_task import random_task
 from tools.setup import setup_surfaces
+from tools.auto_resize import auto_resize
 from surfaces.text_surface import textInputsSurface
 from surfaces.photograph_surface import photographSurface
 from surfaces.video_surface import videoSurface
@@ -20,16 +21,17 @@ class mainSurface:
 
     def setup_mainsurface(self):
         play_gif.decomposePics("./resources/start.gif")
-        self.lb = Label(self.root, text='请开始你的创作......', bg="#171841", fg="white",
-                        font=('方正舒体', '14', 'normal'))
+        self.lb = Label(self.root, text='请开始你的创作......', bg="#171841", fg="white")
         self.lb.pack()
-        self.start_button = Button(self.root, text='start', relief=FLAT, bd=1)
+        self.start_button = Label(self.root, text='start', relief=FLAT, bd=0, cursor='hand2',
+                                  height=60, width=80, bg="#171841")
         self.start_button.place(relx=0.5, rely=0.5, anchor='center')
-        self.start_button.config(command=lambda: self.choose_task()) # todo test
+        self.start_button.bind('<Button-1>', self.choose_task)
+        self.root.bind("<Configure>", lambda event: auto_resize(event, self.root, self.lb, self.start_button))
         # 动画效果
         self.decoration(self.root)
 
-    def choose_task(self):
+    def choose_task(self, event):
         if self.count == 0:
             self.surface = random_task(self.surfaces)
             self.count += 1
@@ -65,7 +67,6 @@ class mainSurface:
             create_time = create_time[:11] + create_time[20:24]
             current_time = time.ctime()
             current_time = current_time[:11] + current_time[20:24]
-            print(create_time)
             if create_time == current_time:
                 return True
         return False

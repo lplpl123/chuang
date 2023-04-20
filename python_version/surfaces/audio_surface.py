@@ -19,13 +19,14 @@ class audioSurface():
         self.btn.place_forget()
         self.lb.config(text='请录下一段音频......')
         # upload
-        self.upload_button = Button(self.root, text='upload', command=self.upload_audio)
+        self.upload_button = Label(self.root, text='upload', bg="#171841", fg="white", cursor='hand2')
+        self.upload_button.bind('<Button-1>', self.upload_audio)
         self.upload_button.place(anchor='center', relx=0.5, rely=0.5)
         # exit
         self.exit_button = Button(self.root, text='exit', command=lambda: self.exit_audio())
         self.exit_button.place(anchor='center', relx=0.2, rely=0.9)
 
-    def upload_audio(self):
+    def upload_audio(self, event):
         file_path = filedialog.askopenfilename(title=u'选择文件', initialdir=(os.path.expanduser('H:/')))
         if file_path:
             self.upload_button.place_forget()
