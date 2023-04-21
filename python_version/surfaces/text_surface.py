@@ -8,6 +8,7 @@ class textInputsSurface():
         self.lb = lb
         self.btn = btn
         self.root = root
+        self.user_inputs = Text(self.root, height=13, width=40)
 
     def create_surface(self):
         # 停止播放上一个界面的动画
@@ -17,9 +18,8 @@ class textInputsSurface():
         # 更改提示语
         self.lb.config(text='请写下你此时的心情......')
         # 生成text输入框
-        self.user_inputs = Text(self.root, height=13)
         self.scroll = Scrollbar()
-        self.scroll.pack(side=RIGHT, fill=Y)
+        self.scroll.pack(side=RIGHT, fill=Y) # todo 放置在user_inputs.info的这个位置
         self.scroll.config(command=self.user_inputs.yview)
         self.user_inputs.config(yscrollcommand=self.scroll.set)
         self.user_inputs.pack()

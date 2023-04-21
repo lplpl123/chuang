@@ -19,7 +19,8 @@ class photographSurface():
         self.btn.place_forget()
         self.lb.config(text='请拍下一张照片......')
         # upload
-        self.upload_button = Button(self.root, text='upload', command=self.upload_photo)
+        self.upload_button = Label(self.root, text='upload', bg="#171841", fg="white", cursor='hand2')
+        self.upload_button.bind('<Button-1>', self.upload_photo)
         self.upload_button.place(anchor='center', relx=0.5, rely=0.5)
         # exit
         self.exit_button = Button(self.root, text='exit', command=lambda: self.exit_photograph())

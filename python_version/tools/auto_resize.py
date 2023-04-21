@@ -1,15 +1,19 @@
+from config import app
 
 
-def auto_resize(event, root, lb, btn):
-    # 传入一个组件
-    # 然后改变它的长和宽，如果有内容的话，再变内容
-    wide = 80
-    height = 60
-    re_size = 10
+def auto_resize(event, root, lb, btn, surfaces):
+    # 计算auto_resize_k
     root_width = root.winfo_width()
     root_height = root.winfo_height()
     k = min(root_width, root_height) / 400
-    re_size = int(re_size + re_size*k)
-    lb['font'] = ('方正舒体', re_size, 'normal')
-    btn['width'] = int(wide + wide*k)
-    btn['height'] = int(height + height * k)
+    # auto_size主界面
+    btn_config = app["main_surface"]["btn"]
+    btn['width'] = int(btn_config[0] + btn_config[0] * k)
+    btn['height'] = int(btn_config[1] + btn_config[1] * k)
+    lb_config = app["main_surface"]["lb"]
+    lb['font'] = ('方正舒体', int(lb_config + lb_config*k), 'normal')
+    # text_surface界面
+    # if surfaces[0].user_inputs.
+    user_inputs_coonfig = app["text_surface"]["user_inputs"]
+    surfaces[0].user_inputs['width'] = int(user_inputs_coonfig[0] + user_inputs_coonfig[0]*k)
+    surfaces[0].user_inputs['height'] = int(user_inputs_coonfig[1] + user_inputs_coonfig[1]*k)

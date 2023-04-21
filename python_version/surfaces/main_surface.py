@@ -21,13 +21,15 @@ class mainSurface:
 
     def setup_mainsurface(self):
         play_gif.decomposePics("./resources/start.gif")
-        self.lb = Label(self.root, text='请开始你的创作......', bg="#171841", fg="white")
-        self.lb.pack()
+        self.lb = Label(self.root, text='请开始你的创作......', bd=0, bg="#171841", fg="white")
+        self.lb.place(relx=0.5, rely=0.0, anchor='n')
         self.start_button = Label(self.root, text='start', relief=FLAT, bd=0, cursor='hand2',
                                   height=60, width=80, bg="#171841")
         self.start_button.place(relx=0.5, rely=0.5, anchor='center')
         self.start_button.bind('<Button-1>', self.choose_task)
-        self.root.bind("<Configure>", lambda event: auto_resize(event, self.root, self.lb, self.start_button))
+        self.root.bind("<Configure>", lambda event: auto_resize(event, self.root, self.lb,
+                                                                self.start_button,
+                                                                self.surfaces))
         # 动画效果
         self.decoration(self.root)
 

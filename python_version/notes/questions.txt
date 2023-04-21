@@ -43,3 +43,5 @@
     1. 从终端进入项目所在文件夹
     2. 执行编译，把python项目里面的python文件全部编译成cpython文件，因为cpython文件全部是二进制文件，不具有可读性，达到加密的效果
         python -m compileall 文件夹名称
+
+16. python如何打印实例的名称？

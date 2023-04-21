@@ -1,12 +1,8 @@
 from tkinter import *
 
 root = Tk()
-root.title("Label Demo")
-root.geometry("200x100")
-Label(root, text="Cursor Hand2", relief="raised",
-      bg="lightyellow", padx=5, pady=10,
-      cursor="hand2").pack()    # 悬停时鼠标手形
-Label(root, text="Cursor heart", relief="raised",
-      bg="lightblue", padx=5, pady=10,
-      cursor="heart").pack()    # 悬停时鼠标心形
+root.geometry('480x240')
+start_button = Label(root, text='start', relief=FLAT, bd=0, cursor='hand2', height="60", width="80", bg="blue")
+# start_button.place(relx=0.5, rely=0.5, anchor='center')
+print(start_button.place_info())
 root.mainloop()
