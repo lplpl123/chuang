@@ -23,7 +23,8 @@ class audioSurface():
         self.upload_button.bind('<Button-1>', self.upload_audio)
         self.upload_button.place(anchor='center', relx=0.5, rely=0.5)
         # exit
-        self.exit_button = Button(self.root, text='exit', command=lambda: self.exit_audio())
+        self.exit_button = Label(self.root, text='exit', bg="#171841", fg="white", cursor='hand2')
+        self.exit_button.bind('<Button-1>', self.exit_audio)
         self.exit_button.place(anchor='center', relx=0.2, rely=0.9)
 
     def upload_audio(self, event):
@@ -34,7 +35,7 @@ class audioSurface():
             image.save("./user data/photos/1.png")
             # 然后就是显现一些其他的部件
 
-    def exit_audio(self):
+    def exit_audio(self, event):
         # 更改提示语
         self.lb.config(text='请开始你的创作......')
         # 隐藏组件

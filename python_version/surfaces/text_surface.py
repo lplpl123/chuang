@@ -8,7 +8,15 @@ class textInputsSurface():
         self.lb = lb
         self.btn = btn
         self.root = root
-        self.user_inputs = Text(self.root, height=13, width=40)
+        self.user_inputs = Text(self.root)
+        self.save_button = Label(self.root, text='save', bg="#171841", fg="white", cursor='hand2')
+        self.save_button.bind("<Button-1>", self.save_text_inputs)
+        self.complete_button = Label(self.root, text='complete', bg="#171841", fg="white", cursor='hand2')
+        self.complete_button.bind('<Button-1>', self.complete_task)
+        self.show_button = Label(self.root, text='show', bg="#171841", fg="white", cursor='hand2')  # todo
+        self.show_button.bind('<Button-1>', self.show_text_history)
+        self.exit_button = Label(self.root, text='exit', bg="#171841", fg="white", cursor='hand2')
+        self.exit_button.bind('<Button-1>', self.exit_text_inputs)
 
     def create_surface(self):
         # 停止播放上一个界面的动画
@@ -22,20 +30,12 @@ class textInputsSurface():
         self.scroll.pack(side=RIGHT, fill=Y) # todo 放置在user_inputs.info的这个位置
         self.scroll.config(command=self.user_inputs.yview)
         self.user_inputs.config(yscrollcommand=self.scroll.set)
-        self.user_inputs.pack()
-        # save
-        self.save_button = Button(self.root, text='save', command=self.save_text_inputs)
+        self.user_inputs.place(relx=0.5, rely=0.1, anchor='n')
         self.save_button.place(anchor='center', relx=0.1, rely=0.9)
-        # complete
-        self.complete_button = Button(self.root, text='complete', command=self.complete_task)
-        self.complete_button.place(anchor='center', relx=0.33, rely=0.9)
-        # show
-        self.show_button = Button(self.root, text='show', command=self.show_text_history)  # todo
-        # exit
-        self.exit_button = Button(self.root, text='exit', command=lambda : self.exit_text_inputs())
-        self.exit_button.place(anchor='center', relx=0.2, rely=0.9)
+        self.complete_button.place(anchor='center', relx=0.5, rely=0.9)
+        self.exit_button.place(anchor='center', relx=0.3, rely=0.9)
 
-    def save_text_inputs(self):
+    def save_text_inputs(self, event):
         # save功能
         text = self.user_inputs.get("1.0", "end")
         # 把text保存到项目文件里面
@@ -43,13 +43,13 @@ class textInputsSurface():
             file.write(text)
         # save and exit功能 todo
 
-    def exit_text_inputs(self):
+    def exit_text_inputs(self, event):
         # 停止播放动画
         play_gif.playgif(1, self.root, self.btn, play_or_not=False)
         # 更改提示语
         self.lb.config(text='请开始你的创作......')
         # 隐藏组件
-        self.user_inputs.pack_forget()
+        self.user_inputs.place_forget()
         self.scroll.pack_forget()
         self.save_button.place_forget()
         self.exit_button.place_forget()
@@ -60,16 +60,16 @@ class textInputsSurface():
         i = 1
         play_gif.playgif(i, self.root, self.btn)
 
-    def complete_task(self):
+    def complete_task(self, event):
         # 直接调用存储函数
-        self.save_text_inputs()
+        self.save_text_inputs(event)
         # 隐藏按钮
         self.save_button.place_forget()
         self.complete_button.place_forget()
         # show按钮
         self.show_button.place(anchor='center', relx=0.1, rely=0.9)
 
-    def show_text_history(self):
+    def show_text_history(self, event):
         # 删除inputs里面的内容
         self.user_inputs.delete("1.0", "end")
         # 显示历史内容
