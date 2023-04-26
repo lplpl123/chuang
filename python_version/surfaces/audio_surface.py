@@ -11,6 +11,10 @@ class audioSurface():
         self.lb = lb
         self.btn = btn
         self.root = root
+        self.upload_button = Label(self.root, text='upload', bg="#171841", fg="white", cursor='hand2')
+        self.upload_button.bind('<Button-1>', self.upload_audio)
+        self.exit_button = Label(self.root, text='exit', bg="#171841", fg="white", cursor='hand2')
+        self.exit_button.bind('<Button-1>', self.exit_audio)
 
     def create_surface(self):
         # 停止播放动画
@@ -18,13 +22,7 @@ class audioSurface():
         # 隐藏主界面的组件
         self.btn.place_forget()
         self.lb.config(text='请录下一段音频......')
-        # upload
-        self.upload_button = Label(self.root, text='upload', bg="#171841", fg="white", cursor='hand2')
-        self.upload_button.bind('<Button-1>', self.upload_audio)
         self.upload_button.place(anchor='center', relx=0.5, rely=0.5)
-        # exit
-        self.exit_button = Label(self.root, text='exit', bg="#171841", fg="white", cursor='hand2')
-        self.exit_button.bind('<Button-1>', self.exit_audio)
         self.exit_button.place(anchor='center', relx=0.2, rely=0.9)
 
     def upload_audio(self, event):
