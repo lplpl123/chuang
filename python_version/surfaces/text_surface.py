@@ -17,6 +17,7 @@ class textInputsSurface():
         self.show_button.bind('<Button-1>', self.show_text_history)
         self.exit_button = Label(self.root, text='exit', bg="#171841", fg="white", cursor='hand2')
         self.exit_button.bind('<Button-1>', self.exit_text_inputs)
+        self.scroll = Scrollbar()
 
     def create_surface(self):
         # 停止播放上一个界面的动画
@@ -25,12 +26,10 @@ class textInputsSurface():
         self.btn.place_forget()
         # 更改提示语
         self.lb.config(text='请写下你此时的心情......')
-        # 生成text输入框
-        self.scroll = Scrollbar()
+        self.user_inputs.place(relx=0.5, rely=0.1, anchor='n')
         self.scroll.pack(side=RIGHT, fill=Y) # todo 放置在user_inputs.info的这个位置
         self.scroll.config(command=self.user_inputs.yview)
         self.user_inputs.config(yscrollcommand=self.scroll.set)
-        self.user_inputs.place(relx=0.5, rely=0.1, anchor='n')
         self.save_button.place(anchor='center', relx=0.1, rely=0.9)
         self.complete_button.place(anchor='center', relx=0.5, rely=0.9)
         self.exit_button.place(anchor='center', relx=0.3, rely=0.9)
