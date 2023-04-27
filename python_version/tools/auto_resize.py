@@ -13,7 +13,6 @@ def auto_resize(event, root, lb, btn, surfaces):
     lb_config = app["main_surface"]["lb"]
     lb['font'] = ('方正舒体', int(lb_config + lb_config*k), 'normal')
     button_config = app["button_size"]
-    text_inputs_config = app["text_inputs"]
     # text_surface界面
     surfaces[0].user_inputs['width'] = int(root_width / 10)
     surfaces[0].user_inputs['height'] = int(root_height / 20)
