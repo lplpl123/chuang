@@ -1,0 +1,6 @@
+用的是BeeWare这个框架
+https://zhuanlan.zhihu.com/p/398126847
+框架别人都打好了，现在要怎么写呢
+我们的程序的主要代码都将在 app.py 里面编写
+不会用啊，这个toga框架
+官方文档：https://toga.readthedocs.io/en/latest/tutorial/tutorial-0.html
