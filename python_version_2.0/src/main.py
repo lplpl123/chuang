@@ -1,5 +1,6 @@
 from tools import setup
 
 
-root = setup.setup()
-setup.run(root)
+run = setup.Run()
+root = run.setup()
+run.run(root)

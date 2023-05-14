@@ -7,20 +7,25 @@ from surfaces.video_surface import VideoSurface
 from surfaces.audio_surface import AudioSurface
 
 
-def setup():
-    root = Tk()
-    root.config(background=app["background"])
-    root.title(app["name"])
-    root.geometry('{}x{}'.format(app["width"], app["height"]))
-    setup_surfaces()
-    return root
+class Run():
+    def setup(self):
+        root = Tk()
+        root.config(background=app["background"])
+        root.title(app["name"])
+        root.geometry('{}x{}'.format(app["width"], app["height"]))
+        self.setup_surfaces(root)
+        return root
 
-def run(root):
-    root.mainloop()
+    def run(self, root):
+        self.blit()
+        root.mainloop()
 
-def setup_surfaces():
-    main_surface = MainSurface()
-    text_surface = TextSurface()
-    photo_surface = PhotoSurface()
-    video_surface = VideoSurface()
-    audio_surface = AudioSurface()
+    def setup_surfaces(self, root):
+        main_surface = MainSurface(root)
+        text_surface = TextSurface()
+        photo_surface = PhotoSurface()
+        video_surface = VideoSurface()
+        audio_surface = AudioSurface()
+
+    def blit(self):
+        pass
