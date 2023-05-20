@@ -8,24 +8,27 @@ from surfaces.audio_surface import AudioSurface
 
 
 class Run():
+    def __init__(self):
+        self.setup()
+
     def setup(self):
-        root = Tk()
-        root.config(background=app["background"])
-        root.title(app["name"])
-        root.geometry('{}x{}'.format(app["width"], app["height"]))
-        self.setup_surfaces(root)
-        return root
+        # 就是一些配置的东西
+        self.root = Tk()
+        self.root.config(background=app["background"])
+        self.root.title(app["name"])
+        self.root.geometry('{}x{}'.format(app["width"], app["height"]))
+        self.setup_surfaces()
 
-    def run(self, root):
-        self.blit()
-        root.mainloop()
+    def run(self):
+        self.blit_main_surface()
+        self.root.mainloop()
 
-    def setup_surfaces(self, root):
-        main_surface = MainSurface(root)
-        text_surface = TextSurface()
-        photo_surface = PhotoSurface()
-        video_surface = VideoSurface()
-        audio_surface = AudioSurface()
+    def setup_surfaces(self):
+        self.main_surface = MainSurface(self.root)
+        self.text_surface = TextSurface()
+        self.photo_surface = PhotoSurface()
+        self.video_surface = VideoSurface()
+        self.audio_surface = AudioSurface()
 
-    def blit(self):
-        pass
+    def blit_main_surface(self):
+        self.main_surface.blit_widgets()
