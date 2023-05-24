@@ -3,5 +3,6 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/src/main.py" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/surfaces/main_surface.py" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/tools/setup.py" charset="UTF-8" />
   </component>
 </project>
