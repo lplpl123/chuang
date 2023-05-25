@@ -20,4 +20,6 @@ class MainSurface:
 
     def select_task(self, event):
         if self.completed_tasks == 0:
-            self.task = select_task_randomly()
+            self.surface = select_task_randomly()
+        elif self.completed_tasks == self.total_tasks:
+            self.lb.config(text='今日创作已完成......')
