@@ -1,9 +1,7 @@
 import numpy as np
-import config
 
 
-def select_task_randomly():
-    surfaces = list(config.surfaces.keys())
+def select_task_randomly(surfaces):
     p = np.random.random()
     if p <= 0.25:
         task = surfaces[0]
