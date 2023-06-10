@@ -1,4 +1,10 @@
 先把程序窗口跑出来
 这个的效果要比tk好太多了
+先把窗口做出来
+我用了其中一个窗口，总共有三个窗口类型
 
-98
+url:
+https://blog.csdn.net/weixin_43431593/article/details/125577712
+https://www.bilibili.com/read/cv21559381
+
+98 95
