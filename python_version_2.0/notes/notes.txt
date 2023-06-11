@@ -73,5 +73,17 @@ select_task的功能：
   每个界面的widgets是跟随frame动的，frame是跟随root动的
 任务也要做数据库了
 是的，那这个提示语就要做到数据库里面
+或者说就不用forget那个mainsurface的界面，直接覆盖就好了
+直接做一个新系统吧，用来切换不同的页面
+tkinter多页面切换
+https://blog.csdn.net/weixin_43287121/article/details/124704276
+为什么frame初始化的前后会有这么大的差别
+https://blog.csdn.net/wujuxKkoolerter/article/details/124367037
 
-创业 74 62 59 85
+任务：
+  1. 页面切换系统
+  2. 判断任务完成函数
+  3. 第一个页面的结束
+  4. 画面的播放
+
+创业 74 62 59 84

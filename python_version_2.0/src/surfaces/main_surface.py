@@ -10,7 +10,7 @@ class MainSurface:
         self.surface = select_task_randomly(self.surfaces)
         self.completed_tasks = 0
         self.total_tasks = 5
-        self.main_frame = Frame(root, width=app["width"], height=app["height"])
+        self.main_frame = Frame(root, width=app["width"], height=app["height"], bg='red')
         self.lb = Label(self.main_frame, text='请开始你的创作......', bd=0, bg="#171841", fg="white")
         self.start_button = Label(self.main_frame, text='start', relief=FLAT, bd=0, cursor='hand2',
                                   bg="#171841", fg="white")
@@ -29,6 +29,6 @@ class MainSurface:
             self.surface = select_task_randomly(self.surfaces)
 
     def start_button_function(self, event):
-        self.select_task()
-        self.main_frame.place_forget()
+        # self.select_task()
+        self.surface = self.surfaces[0] # test code
         self.surface.blit_widgets()
