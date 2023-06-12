@@ -2,18 +2,20 @@ import os
 from tkinter import *
 from tkinter import filedialog
 from PIL import Image
-from config import app
+from config import app, button_label
 from data.task_database import TASKS
 
 
 class TextSurface:
     def __init__(self, root):
-        self.text_frame = Frame(root, width=app["width"], height=app["height"], bg='blue')
+        self.text_frame = Frame(root, width=app["width"], height=app["height"])
+        root.bind("<Configure>", lambda event: self.text_frame_auto_resize(event, root), add="+")
         self.lb = Label(self.text_frame, text='请写下你此时的心情......', bd=0, bg="#171841", fg="white") # todo 要从任务库抽取任务
         self.upload_button = Label(self.text_frame, text='upload', bg="#171841", fg="white", cursor='hand2')
         self.upload_button.bind('<Button-1>', self.upload_text)
         self.exit_button = Label(self.text_frame, text='exit', bg="#171841", fg="white", cursor='hand2')
         self.exit_button.bind('<Button-1>', self.exit)
+        self.text_frame.bind("<Configure>", lambda event: self.widgets_auto_resize(event))
 
     def blit_widgets(self):
         self.text_frame.place(relx=0.0, rely=0.0, anchor='nw')
@@ -33,3 +35,17 @@ class TextSurface:
 
     def exit(self, event):
         self.text_frame.place_forget()
+
+    def text_frame_auto_resize(self, event, root):
+        self.text_frame['width'] = root.winfo_width()
+        self.text_frame['height'] = root.winfo_height()
+
+    def widgets_auto_resize(self, event):
+        frame_width = self.text_frame.winfo_width()
+        frame_height = self.text_frame.winfo_height()
+        ratio = min(frame_height, frame_width) / 300
+        # auto resize widgets
+        lb_config = button_label["text_size"]
+        self.lb['font'] = ('方正舒体', int(lb_config + lb_config * ratio), 'normal')
+        self.upload_button['font'] = ('方正舒体', int(lb_config + lb_config * ratio), 'normal')
+        self.exit_button['font'] = ('方正舒体', int(lb_config + lb_config * ratio), 'normal')

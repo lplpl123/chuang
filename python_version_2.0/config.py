@@ -6,3 +6,9 @@ app = {
     "background": "white",
     "name": "窗"
 }
+
+button_label = {
+    "width": 80,
+    "height": 60,
+    "text_size": 10
+}

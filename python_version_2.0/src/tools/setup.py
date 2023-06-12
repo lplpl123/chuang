@@ -25,9 +25,9 @@ class Run():
 
     def setup_surfaces(self):
         self.text_surface = TextSurface(self.root)
-        self.photo_surface = PhotoSurface()
-        self.video_surface = VideoSurface()
-        self.audio_surface = AudioSurface()
+        self.photo_surface = PhotoSurface(self.root)
+        self.video_surface = VideoSurface(self.root)
+        self.audio_surface = AudioSurface(self.root)
         self.surfaces = [self.text_surface,
                          self.photo_surface,
                          self.video_surface,
