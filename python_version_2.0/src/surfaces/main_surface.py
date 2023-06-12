@@ -19,7 +19,7 @@ class MainSurface:
         root.bind("<Configure>", lambda event: self.main_frame_auto_resize(event, root), add="+")
         self.lb = Label(self.main_frame, text='请开始你的创作......', bd=0, bg="#171841", fg="white")
         self.start_button = Label(self.main_frame, text='start', relief=FLAT, bd=0, cursor='hand2',
-                                  bg="#171841", fg="white")
+                                  bg="#171841", fg="white", width=80, height=60)
         self.start_button.bind('<Button-1>', self.start_button_function)
         self.main_frame.bind("<Configure>", lambda event: self.widgets_auto_resize(event))
         # 处理各组件gif图片 todo 这里需要做一个判别条件
