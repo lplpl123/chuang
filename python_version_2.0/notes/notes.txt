@@ -144,7 +144,13 @@ UI素材网:
 https://zhuanlan.zhihu.com/p/403771057?ivk_sa=1024320u
 https://deepinout.com/tkinter/tkinter-event/tkinter-event-unbind.html
 https://zhuanlan.zhihu.com/p/35836201
+https://blog.csdn.net/weixin_62651706/article/details/125911027
+https://www.cnblogs.com/fangxinliu/p/16831797.html
 
 好像是frame没有img属性
+看来还是得自己创建一个背景板，但是我不知道是创建画布好，还是创建label比较好
+tkinter如何打开word，还不是只能用python打开word，而不是使用tkinter里面的框架
+难道要做成马卡龙色系的
+我打算各子界面进行马卡龙色系，然后加入一点简单的动画元素就ok了
 
-创业 74 62 59 66
+创业 74 62 59 64
