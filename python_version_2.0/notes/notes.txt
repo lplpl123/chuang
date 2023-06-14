@@ -146,6 +146,7 @@ https://deepinout.com/tkinter/tkinter-event/tkinter-event-unbind.html
 https://zhuanlan.zhihu.com/p/35836201
 https://blog.csdn.net/weixin_62651706/article/details/125911027
 https://www.cnblogs.com/fangxinliu/p/16831797.html
+https://blog.csdn.net/weixin_43956958/article/details/117703576
 
 好像是frame没有img属性
 看来还是得自己创建一个背景板，但是我不知道是创建画布好，还是创建label比较好
