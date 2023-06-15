@@ -16,6 +16,7 @@ class MainSurface:
         self.surface = select_task_randomly(self.surfaces)
         self.completed_tasks = 0
         self.total_tasks = 5
+        self.tol_frames = 101
         self.original_img = "./resources/originals/jijian02.gif" # todo 使用os读文件夹里面的东西
         self.output_imgs = "./resources/surfaces_imgs/main_surface_imgs/background"
 
@@ -34,10 +35,10 @@ class MainSurface:
     def blit_widgets(self):
         self.main_frame.place(relx=0.0, rely=0.0, anchor='nw')
         self.main_frame.tkraise()
-        self.background.place(relx=0.0, rely=0.0, anchor='nw')
+        self.background.place(relx=0.5, rely=0.5, anchor='center')
         self.lb.place(relx=0.5, rely=0.0, anchor='n')
         self.start_button.place(relx=0.5, rely=0.15, anchor='center')
-        self.play_gif(self.play_index, self.root, self.background, self.output_imgs)
+        self.play_gif(self.play_index, self.root, self.background, self.output_imgs, self.tol_frames)
 
     def select_task(self):
         if self.completed_tasks == self.total_tasks:
@@ -58,15 +59,18 @@ class MainSurface:
     def widgets_auto_resize(self, event):
         frame_width = self.main_frame.winfo_width()
         frame_height = self.main_frame.winfo_height()
-        ratio = min(frame_height, frame_width) / 300
+        if frame_width <= frame_height:
+            ratio = frame_width / 800
+        else:
+            ratio = frame_height / 600
         # auto resize widgets
         lb_config = button_label["text_size"]
         self.lb['font'] = ('方正舒体', int(lb_config + lb_config * ratio), 'normal')
         self.start_button['font'] = ('方正舒体', int(lb_config + lb_config * ratio), 'normal')
-        self.background['width'] = frame_width
-        self.background['height'] = frame_height
+        self.background['width'] = int(800 * ratio)
+        self.background['height'] = int(600 * ratio)
 
-    def play_gif(self, index, root, widget, path, time=30):
+    def play_gif(self, index, root, widget, path, tol_frames, time=30):
         global loop
         with Image.open(path + "/frame{}.png".format(index)) as img:
             img = img.resize((int(widget['width']), int(widget['height'])))
@@ -74,6 +78,6 @@ class MainSurface:
         widget.config(image=image)
         widget.img = image
         index += 1
-        if index == 101:
+        if index == tol_frames:
             index = 1
-        loop = root.after(time, self.play_gif, index, root, widget, path, time)
+        loop = root.after(time, self.play_gif, index, root, widget, path, tol_frames, time)
