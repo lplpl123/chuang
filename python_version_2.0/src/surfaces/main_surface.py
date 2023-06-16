@@ -5,6 +5,7 @@ from config import app, button_label
 from tools.select_task_randomly import select_task_randomly
 from tools.check_if_task_completed import check_if_task_completed
 from tools.decomposepics import decomposePics
+from tools.micro_cartoon import *
 
 
 class MainSurface:
@@ -21,14 +22,17 @@ class MainSurface:
         self.output_imgs = "./resources/surfaces_imgs/main_surface_imgs/background"
 
         # init widgets
-        self.main_frame = Frame(root, width=app["width"], height=app["height"])
+        self.main_frame = Frame(root, width=app["width"], height=app["height"], bg="#00B66D")
+        self.main_frame.bind("<Configure>", lambda event: self.widgets_auto_resize(event))
         root.bind("<Configure>", lambda event: self.main_frame_auto_resize(event, root), add="+")
-        self.background = Label(self.main_frame, bd=0, width=app["width"], height=app["height"])
+        self.background = Label(self.main_frame, bd=0, width=app["width"], height=app["height"], bg='#00B66D')
         self.lb = Label(self.main_frame, text='请开始你的创作......', bd=0, bg="#00B66D", fg="white")
+        # start_button
         self.start_button = Label(self.main_frame, text='start', relief=FLAT, bd=0, cursor='hand2',
                                   bg="#00B66D", fg="white")
         self.start_button.bind('<Button-1>', self.start_button_function)
-        self.main_frame.bind("<Configure>", lambda event: self.widgets_auto_resize(event))
+        self.start_button.bind('<Enter>', lambda event: mouse_slip_on_widget(event, self.start_button, 'black'))
+        self.start_button.bind('<Leave>', lambda event: mouse_slip_off_widget(event, self.start_button, 'white'))
         # 处理各组件gif图片 todo 这里需要做一个判别条件
         decomposePics(self.original_img, self.output_imgs)
 

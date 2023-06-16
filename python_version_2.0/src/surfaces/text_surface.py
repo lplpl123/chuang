@@ -60,11 +60,15 @@ class TextSurface:
     def widgets_auto_resize(self, event):
         frame_width = self.text_frame.winfo_width()
         frame_height = self.text_frame.winfo_height()
-        ratio = min(frame_height, frame_width) / 300
+        if frame_width <= frame_height:
+            ratio = frame_width / 800
+        else:
+            ratio = frame_height / 600
         # auto resize widgets
         lb_config = button_label["text_size"]
         self.lb['font'] = ('方正舒体', int(lb_config + lb_config * ratio), 'normal')
         self.upload_button['font'] = ('方正舒体', int(lb_config + lb_config * ratio), 'normal')
+        self.edit_button['font'] = ('方正舒体', int(lb_config + lb_config * ratio), 'normal')
         self.exit_button['font'] = ('方正舒体', int(lb_config + lb_config * ratio), 'normal')
         self.decoration['width'] = int(34 + 34 * ratio)
         self.decoration['height'] = int(20 + 20 * ratio)
@@ -84,4 +88,4 @@ class TextSurface:
     def edit_button_function(self, event):
         # init sub surfaces
         text_edit_surface = TextEditSurface(self.text_frame)
-        pass
+        text_edit_surface.blit_widgets()

@@ -1,1 +1,10 @@
 1. canvas和frame的区别是什么？
+
+2. tkinter的Text组件能不能换字体？
+    https://zhuanlan.zhihu.com/p/491731567?utm_id=0
+
+3. 鼠标悬停的动画效果
+    https://www.cnpython.com/qa/112317
+
+4. scrollbar的用法
+    https://blog.csdn.net/weixin_43708622/article/details/107539215
