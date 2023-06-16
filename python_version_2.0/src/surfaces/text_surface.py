@@ -6,6 +6,7 @@ from PIL import ImageTk
 from config import app, button_label
 from data.task_database import TASKS
 from tools.decomposepics import decomposePics
+from tools.micro_cartoon import *
 from surfaces.sub_surfaces.text_edit_surface import TextEditSurface
 
 
@@ -20,9 +21,14 @@ class TextSurface:
         # init widgets
         self.text_frame = Frame(root, width=app["width"], height=app["height"], bg='#FDBB58')
         root.bind("<Configure>", lambda event: self.text_frame_auto_resize(event, root), add="+")
-        self.lb = Label(self.text_frame, text='*请写下你此时的心情...', bd=0, bg="#FDBB58", fg="white") # todo 要从任务库抽取任务
+        self.lb = Label(self.text_frame, text='请写下你此时的心情...', bd=0, bg="#FDBB58", fg="white") # todo 要从任务库抽取任务
+        # 任务稀有度标识
+        self.task_level = Canvas(self.text_frame, width=30, height=30, bd=0, bg="#FDBB58", highlightthickness=0)
         self.upload_button = Label(self.text_frame, text='upload', bg="#FDBB58", fg="white", cursor='hand2')
         self.upload_button.bind('<Button-1>', self.upload_text)
+        self.upload_button.bind('<Enter>', lambda event: mouse_slip_on_widget(event, self.upload_button, 'black'))
+        self.upload_button.bind('<Leave>', lambda event: mouse_slip_off_widget(event, self.upload_button, 'white'))
+        # edit_button
         self.edit_button = Label(self.text_frame, text='edit', bg="#FDBB58", fg="white", cursor='hand2')
         self.edit_button.bind('<Button-1>', self.edit_button_function)
         self.exit_button = Label(self.text_frame, text='exit', bg="#FDBB58", fg="white", cursor='hand2')
@@ -35,6 +41,8 @@ class TextSurface:
         self.text_frame.place(relx=0.0, rely=0.0, anchor='nw')
         self.text_frame.tkraise()
         self.lb.place(relx=0.5, rely=0.0, anchor='n')
+        self.task_level.place(relx=0.0, rely=0.0, anchor='nw')
+        self.task_level.create_oval(10, 10, 20, 20, fill='white')
         self.upload_button.place(anchor='center', relx=0.4, rely=0.5)
         self.edit_button.place(anchor='center', relx=0.6, rely=0.5)
         self.exit_button.place(anchor='center', relx=0.2, rely=0.9)

@@ -1,3 +1,4 @@
+import time
 from tkinter import *
 from config import app, button_label
 
@@ -25,4 +26,12 @@ class TextEditSurface():
 
     def done_button_function(self, event):
         # 保存文件
+        text_data = self.text_inputs.get("1.0", "end")
+        current_time = time.ctime()
+        with open('./data/user_private_data/text_surface_data/0/{}.txt'.format(current_time),
+                  mode='a', encoding='utf-8') as file:
+            file.write(text_data)
+        with open('./data/tem/{}.txt'.format(current_time), mode='a', encoding='utf-8') as file:
+            file.write(text_data)
+        # 摧毁text_edit界面
         self.text_inputs_frame.destroy()

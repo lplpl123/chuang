@@ -1,9 +1,4 @@
-from tkinter import *
+import time
 
-root = Tk()
-root.config(background='#00B66D')
-x = Label(root, text='hello')
-x.pack()
-print(x['width'])
-root.mainloop()
+print(time.ctime())
 
