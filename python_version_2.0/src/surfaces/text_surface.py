@@ -7,6 +7,8 @@ from config import app, button_label
 from data.task_database import TASKS
 from tools.decomposepics import decomposePics
 from tools.micro_cartoon import *
+from tools.select_task_randomly import select_task_randomly
+from tools.blite_task_level_img import blite_task_level_img
 from surfaces.sub_surfaces.text_edit_surface import TextEditSurface
 
 
@@ -18,12 +20,14 @@ class TextSurface:
         self.tol_frames = 27
         self.original_img = "./resources/originals/text.gif"  # todo 使用os读文件夹里面的东西
         self.output_imgs = "./resources/surfaces_imgs/text_surface_imgs/decoration01"
+        self.task, self.level = select_task_randomly("text_surface")
         # init widgets
-        self.text_frame = Frame(root, width=app["width"], height=app["height"], bg='#FDBB58')
         root.bind("<Configure>", lambda event: self.text_frame_auto_resize(event, root), add="+")
-        self.lb = Label(self.text_frame, text='请写下你此时的心情...', bd=0, bg="#FDBB58", fg="white") # todo 要从任务库抽取任务
+        self.text_frame = Frame(root, width=app["width"], height=app["height"], bg='#FDBB58')
+        self.text_frame.bind("<Configure>", lambda event: self.widgets_auto_resize(event), add='+')
+        self.lb = Label(self.text_frame, text=self.task, bd=0, bg="#FDBB58", fg="white") # todo 要从任务库抽取任务
         # 任务稀有度标识
-        self.task_level = Canvas(self.text_frame, width=30, height=30, bd=0, bg="#FDBB58", highlightthickness=0)
+        self.task_level_img = Canvas(self.text_frame, width=30, height=30, bd=0, bg="#FDBB58", highlightthickness=0)
         self.upload_button = Label(self.text_frame, text='upload', bg="#FDBB58", fg="white", cursor='hand2')
         self.upload_button.bind('<Button-1>', self.upload_text)
         self.upload_button.bind('<Enter>', lambda event: mouse_slip_on_widget(event, self.upload_button, 'black'))
@@ -31,18 +35,22 @@ class TextSurface:
         # edit_button
         self.edit_button = Label(self.text_frame, text='edit', bg="#FDBB58", fg="white", cursor='hand2')
         self.edit_button.bind('<Button-1>', self.edit_button_function)
+        self.edit_button.bind('<Enter>', lambda event: mouse_slip_on_widget(event, self.edit_button, 'black'))
+        self.edit_button.bind('<Leave>', lambda event: mouse_slip_off_widget(event, self.edit_button, 'white'))
+        # exit_button
         self.exit_button = Label(self.text_frame, text='exit', bg="#FDBB58", fg="white", cursor='hand2')
         self.exit_button.bind('<Button-1>', self.exit)
-        self.text_frame.bind("<Configure>", lambda event: self.widgets_auto_resize(event))
-        self.decoration = Label(self.text_frame, bd=0, width=34, height=20)
+        self.exit_button.bind('<Enter>', lambda event: mouse_slip_on_widget(event, self.exit_button, 'black'))
+        self.exit_button.bind('<Leave>', lambda event: mouse_slip_off_widget(event, self.exit_button, 'white'))
+        self.decoration = Label(self.text_frame, bd=0, width=34, height=20, bg='#FDBB58')
         decomposePics(self.original_img, self.output_imgs)
 
     def blit_widgets(self):
         self.text_frame.place(relx=0.0, rely=0.0, anchor='nw')
         self.text_frame.tkraise()
         self.lb.place(relx=0.5, rely=0.0, anchor='n')
-        self.task_level.place(relx=0.0, rely=0.0, anchor='nw')
-        self.task_level.create_oval(10, 10, 20, 20, fill='white')
+        self.task_level_img.place(relx=0.0, rely=0.0, anchor='nw')
+        blite_task_level_img(self.level, self.task_level_img)
         self.upload_button.place(anchor='center', relx=0.4, rely=0.5)
         self.edit_button.place(anchor='center', relx=0.6, rely=0.5)
         self.exit_button.place(anchor='center', relx=0.2, rely=0.9)
@@ -74,10 +82,10 @@ class TextSurface:
             ratio = frame_height / 600
         # auto resize widgets
         lb_config = button_label["text_size"]
-        self.lb['font'] = ('方正舒体', int(lb_config + lb_config * ratio), 'normal')
-        self.upload_button['font'] = ('方正舒体', int(lb_config + lb_config * ratio), 'normal')
-        self.edit_button['font'] = ('方正舒体', int(lb_config + lb_config * ratio), 'normal')
-        self.exit_button['font'] = ('方正舒体', int(lb_config + lb_config * ratio), 'normal')
+        self.lb['font'] = ('微软雅黑', int(lb_config + lb_config * ratio), 'normal')
+        self.upload_button['font'] = ('微软雅黑', int(lb_config + lb_config * ratio), 'normal')
+        self.edit_button['font'] = ('微软雅黑', int(lb_config + lb_config * ratio), 'normal')
+        self.exit_button['font'] = ('微软雅黑', int(lb_config + lb_config * ratio), 'normal')
         self.decoration['width'] = int(34 + 34 * ratio)
         self.decoration['height'] = int(20 + 20 * ratio)
 
@@ -95,5 +103,5 @@ class TextSurface:
 
     def edit_button_function(self, event):
         # init sub surfaces
-        text_edit_surface = TextEditSurface(self.text_frame)
+        text_edit_surface = TextEditSurface(self.text_frame, self.task)
         text_edit_surface.blit_widgets()

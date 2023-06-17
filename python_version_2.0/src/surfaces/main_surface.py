@@ -2,7 +2,7 @@ from tkinter import *
 from PIL import Image
 from PIL import ImageTk
 from config import app, button_label
-from tools.select_task_randomly import select_task_randomly
+from tools.select_task_randomly import select_surface_randomly
 from tools.check_if_task_completed import check_if_task_completed
 from tools.decomposepics import decomposePics
 from tools.micro_cartoon import *
@@ -14,7 +14,7 @@ class MainSurface:
         self.root = root
         self.play_index = 1
         self.surfaces = surfaces
-        self.surface = select_task_randomly(self.surfaces)
+        self.surface = select_surface_randomly(self.surfaces)
         self.completed_tasks = 0
         self.total_tasks = 5
         self.tol_frames = 101
@@ -49,7 +49,7 @@ class MainSurface:
             self.lb.config(text='今日创作已完成......')
         elif check_if_task_completed(self.surface):
             self.completed_tasks += 1
-            self.surface = select_task_randomly(self.surfaces)
+            self.surface = select_surface_randomly(self.surfaces)
 
     def start_button_function(self, event):
         # self.select_task()
@@ -69,8 +69,8 @@ class MainSurface:
             ratio = frame_height / 600
         # auto resize widgets
         lb_config = button_label["text_size"]
-        self.lb['font'] = ('方正舒体', int(lb_config + lb_config * ratio), 'normal')
-        self.start_button['font'] = ('方正舒体', int(lb_config + lb_config * ratio), 'normal')
+        self.lb['font'] = ('微软雅黑', int(lb_config + lb_config * ratio), 'normal')
+        self.start_button['font'] = ('微软雅黑', int(lb_config + lb_config * ratio), 'normal')
         self.background['width'] = int(800 * ratio)
         self.background['height'] = int(600 * ratio)
 
