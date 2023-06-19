@@ -6,8 +6,9 @@ from tools.micro_cartoon import *
 
 
 class TextEditSurface():
-    def __init__(self, frame, task):
+    def __init__(self, root, frame, task):
         # init params
+        self.root = root
         self.frame = frame
         self.task = task
         self.path = './data/user_private_data/text_surface_data/'
@@ -26,6 +27,18 @@ class TextEditSurface():
         self.done_button.bind('<Enter>', lambda event: expand(event, self.done_button), add="+")
         self.done_button.bind('<Leave>', lambda event: mouse_slip_off_widget(event, self.done_button, 'black'), add="+")
         self.done_button.bind('<Leave>', lambda event: reduce(event, self.done_button), add="+")
+        # menu
+        self.text_inputs_menu = Menu(root)
+        self.file_functions = Menu(self.text_inputs_menu, tearoff="off")
+        self.edit_functions = Menu(self.text_inputs_menu, tearoff="off")
+        # file
+        self.text_inputs_menu.add_cascade(label='file', menu=self.file_functions)
+        self.text_inputs_menu.add_cascade(label='edit', menu=self.edit_functions)
+        self.file_functions.add_command(label="new", command=self.new_file)
+        self.file_functions.add_command(label="open", command=self.open_file)
+        self.file_functions.add_command(label="save", command=self.save_file)
+        self.file_functions.add_separator()
+        self.file_functions.add_command(label="exit", command=self.exit_edit_surface)
 
     def blit_widgets(self):
         self.text_inputs_frame.place(relx=0.0, rely=0.0, anchor='nw')
@@ -33,21 +46,22 @@ class TextEditSurface():
         self.text_inputs.place(relx=0.0, rely=0.0, anchor='nw', relwidth=0.98)
         self.scroll.place(relx=0.98, rely=0.0, anchor='nw',
                           relwidth=0.02, relheight=1)
-        self.done_button.place(relx=0.80, rely=0.90, anchor='nw')
+        self.done_button.place(relx=0.85, rely=0.90, anchor='center')
 
     def done_button_function(self, event):
         # 保存文件
         text_data = self.text_inputs.get("1.0", "end")
-        current_time = time.ctime().split(" ")
-        current_time.pop(3)
-        current_time = "-".join(current_time)
-        if not os.path.isdir(self.path + current_time):
-            os.mkdir(self.path + current_time)
-        with open(self.path + '{}/{}.txt'.format(current_time, self.task),
-                  mode='a', encoding='utf-8') as file:
-            file.write(text_data)
-        with open('./data/tem/{}.txt'.format(self.task), mode='a', encoding='utf-8') as file:
-            file.write(text_data)
+        if text_data.strip():
+            current_time = time.ctime().split(" ")
+            current_time.pop(3)
+            current_time = "-".join(current_time)
+            if not os.path.isdir(self.path + current_time):
+                os.mkdir(self.path + current_time)
+            with open(self.path + '{}/{}.txt'.format(current_time, self.task),
+                      mode='a', encoding='utf-8') as file:
+                file.write(text_data)
+            with open('./data/tem/{}.txt'.format(self.task), mode='a', encoding='utf-8') as file:
+                file.write(text_data)
         # 摧毁text_edit界面
         self.text_inputs_frame.destroy()
 
@@ -65,3 +79,15 @@ class TextEditSurface():
         # auto resize widgets
         lb_config = button_label["text_size"]
         self.done_button['font'] = ('微软雅黑', int(lb_config + lb_config * ratio), 'normal')
+
+    def new_file(self):
+        pass
+
+    def open_file(self):
+        pass
+
+    def save_file(self):
+        pass
+
+    def exit_edit_surface(self):
+        pass

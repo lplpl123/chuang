@@ -31,8 +31,10 @@ class MainSurface:
         self.start_button = Label(self.main_frame, text='start', relief=FLAT, bd=0, cursor='hand2',
                                   bg="#00B66D", fg="white")
         self.start_button.bind('<Button-1>', self.start_button_function)
-        self.start_button.bind('<Enter>', lambda event: mouse_slip_on_widget(event, self.start_button, 'black'))
-        self.start_button.bind('<Leave>', lambda event: mouse_slip_off_widget(event, self.start_button, 'white'))
+        self.start_button.bind('<Enter>', lambda event: mouse_slip_on_widget(event, self.start_button, 'black'), add="+")
+        self.start_button.bind('<Enter>', lambda event: expand(event, self.start_button), add="+")
+        self.start_button.bind('<Leave>', lambda event: mouse_slip_off_widget(event, self.start_button, 'white'), add="+")
+        self.start_button.bind('<Leave>', lambda event: reduce(event, self.start_button), add="+")
         # 处理各组件gif图片 todo 这里需要做一个判别条件
         decomposePics(self.original_img, self.output_imgs)
 
