@@ -129,8 +129,9 @@ class MainSurface:
         widget.config(image=image)
         widget.img = image
         index += 1
-        if index == tol_frames:
+        if index == tol_frames-1:
             self.surface.blit_widgets()
+        if index == tol_frames:
             self.loading_surface_frame.place_forget()
             return
         loading_loop = root.after(time, self.loading_play_gif, index, root, widget, path, tol_frames, time)
