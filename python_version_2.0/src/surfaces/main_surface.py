@@ -27,9 +27,12 @@ class MainSurface:
         # start_button
         self.start_button = Label(self.main_frame, text='start', relief=FLAT, bd=0, cursor='hand2',
                                   bg="#00B66D", fg="white", font=('微软雅黑', int(10), 'normal'))
-        self.start_button.bind('<Button-1>', self.start_button_function)
+        self.start_button.bind('<Button-1>', self.start_button_function, add="+")
+        self.start_button.bind('<Button-1>', lambda event: expand(event, self.start_button), add="+")
         self.start_button.bind('<Enter>', lambda event: mouse_slip_on_widget(event, self.start_button, 'black'), add="+")
+        self.start_button.bind('<Enter>', lambda event: expand(event, self.start_button), add="+")
         self.start_button.bind('<Leave>', lambda event: mouse_slip_off_widget(event, self.start_button, 'white'), add="+")
+        self.start_button.bind('<Leave>', lambda event: reduce(event, self.start_button), add="+")
         # zip widgets with img
         self.widgets_with_img = [self.background]
         # init imgs
