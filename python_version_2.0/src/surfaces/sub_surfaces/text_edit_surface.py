@@ -6,15 +6,20 @@ from tools.micro_cartoon import *
 
 
 class TextEditSurface():
-    def __init__(self, root, frame, task):
+    def __init__(self, farther_root, task):
         # init params
-        self.root = root
-        self.frame = frame
+        self.farther_root = farther_root
         self.task = task
         self.path = './data/user_private_data/text_surface_data/'
+        # init root
+        self.root = Tk()
+        self.root.title(task)
+        self.root.geometry('{}x{}'.format(self.farther_root.winfo_width(),
+                                          self.farther_root.winfo_height()))
+        self.root.protocol('WM_DELETE_WINDOW', self.exit_edit_surface)
         # init widgets
-        frame.bind("<Configure>", lambda event: self.text_inputs_frame_auto_resize(event, frame), add="+")
-        self.text_inputs_frame = Frame(frame, width=app["width"], height=app["height"], bg='white')
+        self.root.bind("<Configure>", lambda event: self.text_inputs_frame_auto_resize(event, self.root), add="+")
+        self.text_inputs_frame = Frame(self.root, width=app["width"], height=app["height"], bg='white')
         self.text_inputs_frame.bind("<Configure>", lambda event: self.widgets_auto_resize(event))
         self.text_inputs = Text(self.text_inputs_frame)
         self.scroll = Scrollbar(self.text_inputs_frame)
@@ -23,12 +28,12 @@ class TextEditSurface():
         # done_button
         self.done_button = Label(self.text_inputs_frame, text='done', bg="white", fg="black", cursor='hand2')
         self.done_button.bind('<Button-1>', self.done_button_function)
-        self.done_button.bind('<Enter>', lambda event: mouse_slip_on_widget(event, self.done_button, '#b8d38f'), add="+")
+        self.done_button.bind('<Enter>', lambda event: mouse_slip_on_widget(event, self.done_button, '#b8f1ed'), add="+")
         self.done_button.bind('<Enter>', lambda event: expand(event, self.done_button), add="+")
         self.done_button.bind('<Leave>', lambda event: mouse_slip_off_widget(event, self.done_button, 'black'), add="+")
         self.done_button.bind('<Leave>', lambda event: reduce(event, self.done_button), add="+")
         # menu
-        self.text_inputs_menu = Menu(root)
+        self.text_inputs_menu = Menu(self.root)
         self.file_functions = Menu(self.text_inputs_menu, tearoff="off")
         self.edit_functions = Menu(self.text_inputs_menu, tearoff="off")
         # file
@@ -39,14 +44,21 @@ class TextEditSurface():
         self.file_functions.add_command(label="save", command=self.save_file)
         self.file_functions.add_separator()
         self.file_functions.add_command(label="exit", command=self.exit_edit_surface)
+        # edit
+        self.edit_functions.add_command(label='cut', command=self.cut)
+        self.edit_functions.add_command(label='copy', command=self.copy)
+        self.edit_functions.add_command(label='paste', command=self.paste)
 
     def blit_widgets(self):
+        self.root.deiconify()
+        self.root.config(menu=self.text_inputs_menu)
         self.text_inputs_frame.place(relx=0.0, rely=0.0, anchor='nw')
         self.text_inputs_frame.tkraise()
         self.text_inputs.place(relx=0.0, rely=0.0, anchor='nw', relwidth=0.98)
         self.scroll.place(relx=0.98, rely=0.0, anchor='nw',
                           relwidth=0.02, relheight=1)
         self.done_button.place(relx=0.85, rely=0.90, anchor='center')
+        self.root.mainloop()
 
     def done_button_function(self, event):
         # 保存文件
@@ -62,12 +74,15 @@ class TextEditSurface():
                 file.write(text_data)
             with open('./data/tem/{}.txt'.format(self.task), mode='a', encoding='utf-8') as file:
                 file.write(text_data)
+        # 还原根窗口
+        self.farther_root.deiconify()
         # 摧毁text_edit界面
-        self.text_inputs_frame.destroy()
+        self.root.config(menu="")
+        self.root.destroy()
 
-    def text_inputs_frame_auto_resize(self, event, frame):
-        self.text_inputs_frame['width'] = frame.winfo_width()
-        self.text_inputs_frame['height'] = frame.winfo_height()
+    def text_inputs_frame_auto_resize(self, event, root):
+        self.text_inputs_frame['width'] = root.winfo_width()
+        self.text_inputs_frame['height'] = root.winfo_height()
 
     def widgets_auto_resize(self, event):
         frame_width = self.text_inputs_frame.winfo_width()
@@ -90,4 +105,13 @@ class TextEditSurface():
         pass
 
     def exit_edit_surface(self):
+        pass
+
+    def cut(self):
+        pass
+
+    def copy(self):
+        pass
+
+    def paste(self):
         pass

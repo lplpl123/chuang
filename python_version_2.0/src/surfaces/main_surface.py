@@ -1,7 +1,8 @@
+import time
 from tkinter import *
 from PIL import Image
 from PIL import ImageTk
-from config import app, button_label
+from config import app, button_label, main_surface_data, loading_surface
 from tools.select_task_randomly import select_surface_randomly
 from tools.check_if_task_completed import check_if_task_completed
 from tools.decomposepics import decomposePics
@@ -17,10 +18,6 @@ class MainSurface:
         self.surface = select_surface_randomly(self.surfaces)
         self.completed_tasks = 0
         self.total_tasks = 5
-        self.tol_frames = 101
-        self.original_img = "./resources/originals/jijian02.gif" # todo 使用os读文件夹里面的东西
-        self.output_imgs = "./resources/surfaces_imgs/main_surface_imgs/background"
-
         # init widgets
         self.main_frame = Frame(root, width=app["width"], height=app["height"], bg="#00B66D")
         self.main_frame.bind("<Configure>", lambda event: self.widgets_auto_resize(event))
@@ -29,14 +26,25 @@ class MainSurface:
         self.lb = Label(self.main_frame, text='请开始你的创作......', bd=0, bg="#00B66D", fg="white")
         # start_button
         self.start_button = Label(self.main_frame, text='start', relief=FLAT, bd=0, cursor='hand2',
-                                  bg="#00B66D", fg="white")
+                                  bg="#00B66D", fg="white", font=('微软雅黑', int(10), 'normal'))
         self.start_button.bind('<Button-1>', self.start_button_function)
         self.start_button.bind('<Enter>', lambda event: mouse_slip_on_widget(event, self.start_button, 'black'), add="+")
-        self.start_button.bind('<Enter>', lambda event: expand(event, self.start_button), add="+")
         self.start_button.bind('<Leave>', lambda event: mouse_slip_off_widget(event, self.start_button, 'white'), add="+")
-        self.start_button.bind('<Leave>', lambda event: reduce(event, self.start_button), add="+")
-        # 处理各组件gif图片 todo 这里需要做一个判别条件
-        decomposePics(self.original_img, self.output_imgs)
+        # zip widgets with img
+        self.widgets_with_img = [self.background]
+        # init imgs
+        self.imgs = main_surface_data.get("imgs")
+        for img, config in self.imgs.items():
+            original_img = config.get("original_img")
+            output_imgs = config.get("output_imgs")
+            # 处理各组件gif图片 todo 这里需要做一个判别条件
+            decomposePics(original_img, output_imgs)
+        # init loading surface
+        self.loading_surface_frame = Frame(self.main_frame, width=app["width"], height=app["height"])
+        self.loading = Label(self.loading_surface_frame, bd=0, width=app["width"], height=app["height"])
+        loading_original_img = loading_surface.get("imgs").get("loading").get("original_img")
+        loading_output_imgs = loading_surface.get("imgs").get("loading").get("output_imgs")
+        decomposePics(loading_original_img, loading_output_imgs)
 
     def blit_widgets(self):
         self.main_frame.place(relx=0.0, rely=0.0, anchor='nw')
@@ -44,7 +52,12 @@ class MainSurface:
         self.background.place(relx=0.5, rely=0.5, anchor='center')
         self.lb.place(relx=0.5, rely=0.0, anchor='n')
         self.start_button.place(relx=0.5, rely=0.15, anchor='center')
-        self.play_gif(self.play_index, self.root, self.background, self.output_imgs, self.tol_frames)
+        i = 0
+        for img, config in self.imgs.items():
+            tol_frames = config.get("tol_frames")
+            output_imgs = config.get("output_imgs")
+            self.play_gif(self.play_index, self.root, self.widgets_with_img[i], output_imgs, tol_frames)
+            i += 1
 
     def select_task(self):
         if self.completed_tasks == self.total_tasks:
@@ -54,9 +67,11 @@ class MainSurface:
             self.surface = select_surface_randomly(self.surfaces)
 
     def start_button_function(self, event):
+        # button还原
+        # self.start_button['font'] = ('微软雅黑', int(10), 'normal')
         # self.select_task()
         self.surface = self.surfaces[0] # test code
-        self.surface.blit_widgets()
+        self.enter_next_surface()
 
     def main_frame_auto_resize(self, event, root):
         self.main_frame['width'] = root.winfo_width()
@@ -75,6 +90,10 @@ class MainSurface:
         self.start_button['font'] = ('微软雅黑', int(lb_config + lb_config * ratio), 'normal')
         self.background['width'] = int(800 * ratio)
         self.background['height'] = int(600 * ratio)
+        self.loading_surface_frame['width'] = frame_width
+        self.loading_surface_frame['height'] = frame_height
+        self.loading['width'] = int(800 * ratio)
+        self.loading['height'] = int(600 * ratio)
 
     def play_gif(self, index, root, widget, path, tol_frames, time=30):
         global loop
@@ -87,3 +106,28 @@ class MainSurface:
         if index == tol_frames:
             index = 1
         loop = root.after(time, self.play_gif, index, root, widget, path, tol_frames, time)
+
+    def enter_next_surface(self):
+        # 绘制loading界面
+        self.loading_surface_frame.place(relx=0.5, rely=0.5, anchor='center')
+        self.loading_surface_frame.tkraise()
+        self.loading.place(relx=0.0, rely=0.0, anchor='nw')
+        # 播放一段加载动画
+        index = 1
+        output_imgs = loading_surface.get("imgs").get("loading").get("output_imgs")
+        tol_frames = loading_surface.get("imgs").get("loading").get("tol_frames")
+        self.loading_play_gif(index, self.root, self.loading, output_imgs, tol_frames)
+
+    def loading_play_gif(self, index, root, widget, path, tol_frames, time=30):
+        global loading_loop
+        with Image.open(path + "/frame{}.png".format(index)) as img:
+            img = img.resize((int(widget['width']), int(widget['height'])))
+            image = ImageTk.PhotoImage(img)
+        widget.config(image=image)
+        widget.img = image
+        index += 1
+        if index == tol_frames:
+            self.surface.blit_widgets()
+            self.loading_surface_frame.place_forget()
+            return
+        loading_loop = root.after(time, self.loading_play_gif, index, root, widget, path, tol_frames, time)

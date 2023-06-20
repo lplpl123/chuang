@@ -103,5 +103,6 @@ class TextSurface:
 
     def edit_button_function(self, event):
         # init sub surfaces
-        text_edit_surface = TextEditSurface(self.root, self.text_frame, self.task)
+        text_edit_surface = TextEditSurface(self.root, self.task)
+        self.root.withdraw()
         text_edit_surface.blit_widgets()

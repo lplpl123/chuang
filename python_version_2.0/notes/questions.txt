@@ -13,3 +13,7 @@
     使用tkinter的canvas来绘制圆形、三角形、菱形、五角星、六角形
     角越多，代表任务越稀有，参照pokemon card
     https://www.bilibili.com/read/cv17402539/
+
+6. tkinter多窗口教程
+    https://blog.csdn.net/MissMango0820/article/details/127657744
+
