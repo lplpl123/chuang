@@ -1,4 +1,5 @@
 import os
+import time
 from tkinter import *
 from tkinter import filedialog
 from PIL import Image
@@ -18,6 +19,7 @@ class TextSurface:
         self.root = root
         self.play_index = 1
         self.tol_frames = 27
+        self.path = './data/user_private_data/text_surface_data/'
         self.original_img = "./resources/originals/text.gif"  # todo 使用os读文件夹里面的东西
         self.output_imgs = "./resources/surfaces_imgs/text_surface_imgs/decoration01"
         self.task, self.level = select_task_randomly("text_surface")
@@ -29,7 +31,7 @@ class TextSurface:
         # 任务稀有度标识
         self.task_level_img = Canvas(self.text_frame, width=30, height=30, bd=0, bg="#FDBB58", highlightthickness=0)
         self.upload_button = Label(self.text_frame, text='upload', bg="#FDBB58", fg="white", cursor='hand2')
-        self.upload_button.bind('<Button-1>', self.upload_text)
+        self.upload_button.bind('<Button-1>', self.upload_button_function)
         self.upload_button.bind('<Enter>', lambda event: mouse_slip_on_widget(event, self.upload_button, 'black'))
         self.upload_button.bind('<Leave>', lambda event: mouse_slip_off_widget(event, self.upload_button, 'white'))
         # edit_button
@@ -57,14 +59,23 @@ class TextSurface:
         self.decoration.place(relx=0.90, rely=0.95, anchor='se')
         self.play_gif(self.play_index, self.root, self.decoration, self.output_imgs, self.tol_frames)
 
-    def upload_text(self, event):
+    def upload_button_function(self, event):
         # todo 得做个判断，是和任务相匹配的才能上传成功
         file_path = filedialog.askopenfilename(title=u'选择文件', initialdir=(os.path.expanduser('H:/')))
         if file_path:
             # 保存文件
-            image = Image.open(file_path)
-            image.save("./data/user_private_data/text_surface_data")
-            # todo 如果保存成功的话，需要退出这个界面，直接调用退出函数就好了exit
+            with open(file_path, mode='r', encoding='utf-8') as file:
+                text_data = file.read()
+            current_time = time.ctime().split(" ")
+            current_time.pop(3)
+            current_time = "-".join(current_time)
+            if not os.path.isdir(self.path + current_time):
+                os.mkdir(self.path + current_time)
+            with open(self.path + '{}/{}.txt'.format(current_time, self.task),
+                      mode='a', encoding='utf-8') as file:
+                file.write(text_data)
+            with open('./data/tem/{}.txt'.format(self.task), mode='a', encoding='utf-8') as file:
+                file.write(text_data)
 
     def exit(self, event):
         self.text_frame.place_forget()

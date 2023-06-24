@@ -73,7 +73,7 @@ class MainSurface:
         # button还原
         # self.start_button['font'] = ('微软雅黑', int(10), 'normal')
         # self.select_task()
-        self.surface = self.surfaces[0] # test code
+        self.surface = self.surfaces[1] # test code
         self.enter_next_surface()
 
     def main_frame_auto_resize(self, event, root):
