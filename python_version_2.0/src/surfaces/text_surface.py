@@ -72,9 +72,9 @@ class TextSurface:
             if not os.path.isdir(self.path + current_time):
                 os.mkdir(self.path + current_time)
             with open(self.path + '{}/{}.txt'.format(current_time, self.task),
-                      mode='a', encoding='utf-8') as file:
+                      mode='w', encoding='utf-8') as file:
                 file.write(text_data)
-            with open('./data/tem/{}.txt'.format(self.task), mode='a', encoding='utf-8') as file:
+            with open('./data/tem/{}.txt'.format(self.task), mode='w', encoding='utf-8') as file:
                 file.write(text_data)
 
     def exit(self, event):

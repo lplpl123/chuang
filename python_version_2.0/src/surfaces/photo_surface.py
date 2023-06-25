@@ -6,6 +6,7 @@ from PIL import ImageTk
 from config import app, button_label
 from tools.micro_cartoon import *
 from tools.select_task_randomly import select_task_randomly
+from surfaces.sub_surfaces.photo_edit_surface import PhotoEditSurface
 
 
 class PhotoSurface:
@@ -83,4 +84,7 @@ class PhotoSurface:
         self.exit_button['font'] = ('微软雅黑', int(lb_config + lb_config * ratio), 'normal')
 
     def edit_button_function(self, event):
-        pass
+        # init sub surfaces
+        photo_edit_surface = PhotoEditSurface(self.root, self.task)
+        self.root.withdraw()
+        photo_edit_surface.blit_widgets()

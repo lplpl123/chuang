@@ -25,6 +25,7 @@ class TextEditSurface():
         self.scroll = Scrollbar(self.text_inputs_frame)
         self.text_inputs.config(yscrollcommand=self.scroll.set)
         self.scroll.config(command=self.text_inputs.yview)
+        self.text_inputs.bind("<Button-3>", self.popup)
         # done_button
         self.done_button = Label(self.text_inputs_frame, text='done', bg="white", fg="black", cursor='hand2')
         self.done_button.bind('<Button-1>', self.done_button_function)
@@ -70,9 +71,9 @@ class TextEditSurface():
             if not os.path.isdir(self.path + current_time):
                 os.mkdir(self.path + current_time)
             with open(self.path + '{}/{}.txt'.format(current_time, self.task),
-                      mode='a', encoding='utf-8') as file:
+                      mode='w', encoding='utf-8') as file:
                 file.write(text_data)
-            with open('./data/tem/{}.txt'.format(self.task), mode='a', encoding='utf-8') as file:
+            with open('./data/tem/{}.txt'.format(self.task), mode='w', encoding='utf-8') as file:
                 file.write(text_data)
         # 还原根窗口
         self.farther_root.deiconify()
@@ -115,3 +116,6 @@ class TextEditSurface():
 
     def paste(self):
         pass
+
+    def popup(self, event):
+        self.file_functions.post(event.x_root, event.y_root)
