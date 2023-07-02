@@ -22,7 +22,7 @@ class TextSurface:
         self.path = './data/user_private_data/text_surface_data/'
         self.original_img = "./resources/originals/text.gif"  # todo 使用os读文件夹里面的东西
         self.output_imgs = "./resources/surfaces_imgs/text_surface_imgs/decoration01"
-        self.task, self.level = select_task_randomly("text_surface")
+        self.init_task()
         # init widgets
         root.bind("<Configure>", lambda event: self.text_frame_auto_resize(event, root), add="+")
         self.text_frame = Frame(root, width=app["width"], height=app["height"], bg='#FDBB58')
@@ -47,7 +47,31 @@ class TextSurface:
         self.decoration = Label(self.text_frame, bd=0, width=34, height=20, bg='#FDBB58')
         decomposePics(self.original_img, self.output_imgs)
 
+    def init_task(self):
+        with open("./data/current_tasks", mode='a', encoding='utf-8') as file:
+            current_tasks_info = file.read()
+            current_tasks_info = current_tasks_info.split('\n')
+            if len(current_tasks_info) == 0:
+                self.task, self.level = select_task_randomly("text_surface")
+                task_info = self.task + " " + "0" + " " + "text_surface" + " " + self.level
+                file.write(task_info)
+            else:
+                last_task = current_tasks_info[-1]
+                last_task = last_task.split(" ")
+                task_completed_or_not = last_task[1]
+                task_name = last_task[0]
+                task_level = last_task[3]
+                if task_completed_or_not == "1":
+                    self.task, self.level = select_task_randomly("text_surface")
+                    task_info = self.task + " " + "0" + " " + "text_surface" + " " + self.level
+                    file.write(task_info)
+                else:
+                    self.task = task_name
+                    self.level = task_level
+
+
     def blit_widgets(self):
+        # todo 当第二次以后再进行绘制的时候，任务其实还是同一个
         self.text_frame.place(relx=0.0, rely=0.0, anchor='nw')
         self.text_frame.tkraise()
         self.lb.place(relx=0.5, rely=0.0, anchor='n')
@@ -74,7 +98,7 @@ class TextSurface:
             with open(self.path + '{}/{}.txt'.format(current_time, self.task),
                       mode='w', encoding='utf-8') as file:
                 file.write(text_data)
-            self.record_task_info()
+                self.record_task_info()
 
     def exit(self, event):
         self.text_frame.place_forget()

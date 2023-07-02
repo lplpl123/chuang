@@ -17,7 +17,7 @@ class MainSurface:
         self.play_index = 1
         self.total_tasks = 5
         self.surfaces = surfaces
-        self.init_taks()
+        self.init_task()
         # init widgets
         self.main_frame = Frame(root, width=app["width"], height=app["height"], bg="#00B66D")
         self.main_frame.bind("<Configure>", lambda event: self.widgets_auto_resize(event))
@@ -49,7 +49,7 @@ class MainSurface:
         loading_output_imgs = loading_surface.get("imgs").get("loading").get("output_imgs")
         decomposePics(loading_original_img, loading_output_imgs)
 
-    def init_taks(self):
+    def init_task(self):
         with open("./data/current_tasks", mode='r', encoding='utf-8') as file:
             current_tasks_info = file.read()
             current_tasks_info = current_tasks_info.split('\n')
@@ -60,7 +60,7 @@ class MainSurface:
             last_task = current_tasks_info[-1]
             last_task = last_task.split(" ")
             task_completed_or_not = last_task[1]
-            surface_name = last_task[-1]
+            surface_name = last_task[2]
             if task_completed_or_not == "1":
                 self.surface = select_surface_randomly(self.surfaces)
                 self.completed_task_num = len(current_tasks_info) - 1
@@ -76,6 +76,7 @@ class MainSurface:
                 self.completed_task_num = len(current_tasks_info)
 
     def blit_widgets(self):
+        # todo 当第二次以后进行绘制的时候，就需要重新选择任务了
         self.main_frame.place(relx=0.0, rely=0.0, anchor='nw')
         self.main_frame.tkraise()
         self.background.place(relx=0.5, rely=0.5, anchor='center')
@@ -90,11 +91,12 @@ class MainSurface:
 
     def select_task(self):
         if self.completed_task_num == self.total_tasks:
-            # todo 删除tem里面的文件
             self.lb.config(text='今日创作已完成......')
+            # todo 清空current_tasks里面的任务
         elif check_if_task_completed(self.surface):
             self.completed_task_num += 1
             self.surface = select_surface_randomly(self.surfaces)
+            # todo 更改数据库，由0变为1
 
     def start_button_function(self, event):
         # button还原
