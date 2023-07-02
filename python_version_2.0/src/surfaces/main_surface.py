@@ -1,4 +1,5 @@
 import time
+import os
 from tkinter import *
 from PIL import Image
 from PIL import ImageTk
@@ -14,10 +15,9 @@ class MainSurface:
         # init params
         self.root = root
         self.play_index = 1
-        self.surfaces = surfaces
-        self.surface = select_surface_randomly(self.surfaces)
-        self.completed_tasks = 0
         self.total_tasks = 5
+        self.surfaces = surfaces
+        self.init_taks()
         # init widgets
         self.main_frame = Frame(root, width=app["width"], height=app["height"], bg="#00B66D")
         self.main_frame.bind("<Configure>", lambda event: self.widgets_auto_resize(event))
@@ -49,6 +49,32 @@ class MainSurface:
         loading_output_imgs = loading_surface.get("imgs").get("loading").get("output_imgs")
         decomposePics(loading_original_img, loading_output_imgs)
 
+    def init_taks(self):
+        with open("./data/current_tasks", mode='r', encoding='utf-8') as file:
+            current_tasks_info = file.read()
+            current_tasks_info = current_tasks_info.split('\n')
+        if len(current_tasks_info) == 0:
+            self.surface = select_surface_randomly(self.surfaces)
+            self.completed_task_num = 0
+        elif len(current_tasks_info) < 5:
+            last_task = current_tasks_info[-1]
+            last_task = last_task.split(" ")
+            task_completed_or_not = last_task[1]
+            surface_name = last_task[-1]
+            if task_completed_or_not == "1":
+                self.surface = select_surface_randomly(self.surfaces)
+                self.completed_task_num = len(current_tasks_info) - 1
+            else:
+                if surface_name == "text_surface":
+                    self.surface = self.surfaces[0]
+                elif surface_name == "photo_surface":
+                    self.surface = self.surfaces[1]
+                elif surface_name == "video_surface":
+                    self.surface = self.surfaces[2]
+                elif surface_name == "audio_surface":
+                    self.surface = self.surfaces[3]
+                self.completed_task_num = len(current_tasks_info)
+
     def blit_widgets(self):
         self.main_frame.place(relx=0.0, rely=0.0, anchor='nw')
         self.main_frame.tkraise()
@@ -63,17 +89,16 @@ class MainSurface:
             i += 1
 
     def select_task(self):
-        if self.completed_tasks == self.total_tasks:
+        if self.completed_task_num == self.total_tasks:
+            # todo 删除tem里面的文件
             self.lb.config(text='今日创作已完成......')
         elif check_if_task_completed(self.surface):
-            self.completed_tasks += 1
+            self.completed_task_num += 1
             self.surface = select_surface_randomly(self.surfaces)
 
     def start_button_function(self, event):
         # button还原
-        # self.start_button['font'] = ('微软雅黑', int(10), 'normal')
-        # self.select_task()
-        self.surface = self.surfaces[0] # test code
+        self.select_task()
         self.enter_next_surface()
 
     def main_frame_auto_resize(self, event, root):

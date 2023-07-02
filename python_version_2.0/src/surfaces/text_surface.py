@@ -74,8 +74,7 @@ class TextSurface:
             with open(self.path + '{}/{}.txt'.format(current_time, self.task),
                       mode='w', encoding='utf-8') as file:
                 file.write(text_data)
-            with open('./data/tem/{}.txt'.format(self.task), mode='w', encoding='utf-8') as file:
-                file.write(text_data)
+            self.record_task_info()
 
     def exit(self, event):
         self.text_frame.place_forget()
@@ -117,3 +116,6 @@ class TextSurface:
         text_edit_surface = TextEditSurface(self.root, self.task)
         self.root.withdraw()
         text_edit_surface.blit_widgets()
+
+    def record_task_info(self):
+        pass

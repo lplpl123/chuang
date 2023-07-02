@@ -1,21 +1,4 @@
-from tkinter import *
-
-def f(event):
-    frame2.place(relx=0.0, rely=0.0, anchor='nw')
-    lb2 = Label(frame2, text='请开始你的chang......', bd=0, bg="#171841", fg="white")
-    lb2.bind('<Button-1>', f1)
-    lb2.place(relx=0.0, rely=0.0, anchor='nw')
-
-def f1(event):
-    frame1.place(relx=0.0, rely=0.0, anchor='nw')
-
-
-root = Tk()
-frame2 = Frame(root, bg="blue", width=480, height=240)
-frame1 = Frame(root, bg="red", width=480, height=240)
-frame1.place(relx=0.0, rely=0.0, anchor='nw')
-lb1 = Label(frame1, text='请开始你的创作......', bd=0, bg="#171841", fg="white")
-lb1.bind('<Button-1>', f)
-lb1.place(relx=0.0, rely=0.0, anchor='nw')
-
-root.mainloop()
+with open("C:/Users/75882/Desktop/my world/projects/chuang/python_version_2.0/src/data/current_tasks", mode='r', encoding='utf-8') as file:
+    current_task_info = file.read()
+    current_task_info = current_task_info.split('\n')
+    print(current_task_info)

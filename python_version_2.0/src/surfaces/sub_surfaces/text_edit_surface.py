@@ -73,8 +73,6 @@ class TextEditSurface():
             with open(self.path + '{}/{}.txt'.format(current_time, self.task),
                       mode='w', encoding='utf-8') as file:
                 file.write(text_data)
-            with open('./data/tem/{}.txt'.format(self.task), mode='w', encoding='utf-8') as file:
-                file.write(text_data)
         # 还原根窗口
         self.farther_root.deiconify()
         # 摧毁text_edit界面
