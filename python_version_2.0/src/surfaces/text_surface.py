@@ -48,9 +48,10 @@ class TextSurface:
         decomposePics(self.original_img, self.output_imgs)
 
     def init_task(self):
-        with open("./data/current_tasks", mode='a', encoding='utf-8') as file:
+        with open("./data/current_tasks", mode="r", encoding="utf-8") as file:
             current_tasks_info = file.read()
             current_tasks_info = current_tasks_info.split('\n')
+        with open("./data/current_tasks", mode='a', encoding='utf-8') as file:
             if len(current_tasks_info) == 0:
                 self.task, self.level = select_task_randomly("text_surface")
                 task_info = self.task + " " + "0" + " " + "text_surface" + " " + self.level
@@ -69,9 +70,23 @@ class TextSurface:
                     self.task = task_name
                     self.level = task_level
 
+    def select_task(self):
+        with open("./data/current_tasks", mode="r", encoding="utf-8") as file:
+            current_tasks_info = file.read()
+            current_tasks_info = current_tasks_info.split('\n')
+        with open("./data/current_tasks", mode='a', encoding='utf-8') as file:
+            last_task = current_tasks_info[-1]
+            last_task = last_task.split(" ")
+            task_completed_or_not = last_task[1]
+            if task_completed_or_not == "1":
+                self.task, self.level = select_task_randomly("text_surface")
+                task_info = self.task + " " + "0" + " " + "text_surface" + " " + self.level
+                file.write(task_info)
 
     def blit_widgets(self):
-        # todo 当第二次以后再进行绘制的时候，任务其实还是同一个
+        # todo 当第二次以后再进行绘制的时候，任务其实还是同一个,然后更改标题
+        self.select_task()
+        self.lb.config(text=self.task)
         self.text_frame.place(relx=0.0, rely=0.0, anchor='nw')
         self.text_frame.tkraise()
         self.lb.place(relx=0.5, rely=0.0, anchor='n')

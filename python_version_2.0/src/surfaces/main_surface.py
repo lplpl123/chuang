@@ -92,11 +92,24 @@ class MainSurface:
     def select_task(self):
         if self.completed_task_num == self.total_tasks:
             self.lb.config(text='今日创作已完成......')
-            # todo 清空current_tasks里面的任务
+            with open("./data/current_tasks", mode="r", encoding="utf-8") as file:
+                file.write("")
         elif check_if_task_completed(self.surface):
             self.completed_task_num += 1
             self.surface = select_surface_randomly(self.surfaces)
-            # todo 更改数据库，由0变为1
+            # 任务完成之后，更改数据库
+            with open("./data/current_tasks", mode="r", encoding="utf-8") as file:
+                current_tasks_info = file.read()
+                current_tasks_info = current_tasks_info.split('\n')
+                last_task = current_tasks_info[-1]
+                last_task = last_task.split(" ")
+                last_task[1] = "1"
+                last_task = " ".join(last_task)
+                current_tasks_info.pop()
+                current_tasks_info.append(last_task)
+                current_tasks_info = "\n".join(current_tasks_info)
+            with open("./data/current_tasks", mode="r", encoding="utf-8") as file:
+                file.write(current_tasks_info)
 
     def start_button_function(self, event):
         # button还原
