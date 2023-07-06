@@ -113,7 +113,8 @@ class MainSurface:
 
     def start_button_function(self, event):
         # button还原
-        self.select_task()
+        # self.select_task()
+        self.surface = self.surfaces[1]
         self.enter_next_surface()
 
     def main_frame_auto_resize(self, event, root):
