@@ -37,3 +37,7 @@
 
 11. 如何判断线程是否运行结束了？
 
+12. 如何改变Text中选中的文字字体?
+    text_widget.tag_add("font_1", *map(str, text_widget.tag_ranges("sel")))
+    text_widget.tag_config("font_1", font=...)
+    这将更改所选文本的字体。

@@ -116,4 +116,4 @@ class TextEditSurface():
         pass
 
     def popup(self, event):
-        self.file_functions.post(event.x_root, event.y_root)
+        self.edit_functions.post(event.x_root, event.y_root)
