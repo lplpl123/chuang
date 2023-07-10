@@ -1,3 +1,4 @@
+import time
 import multiprocessing
 from tools import setup
 from tools.waiting_init import WaitingInit
@@ -14,4 +15,5 @@ if __name__ == '__main__':
     loading_process.start()
     run = setup.Run()
     loading_process.terminate()
+    time.sleep(1)
     run.run()

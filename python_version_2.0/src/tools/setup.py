@@ -17,6 +17,9 @@ class Run():
         self.root.config(background=app["background"])
         self.root.title(app["name"])
         self.root.geometry('{}x{}'.format(app["width"], app["height"]))
+        x = int((self.root.winfo_screenwidth() - 800) / 2)
+        y = int((self.root.winfo_screenheight() - 600) / 2)
+        self.root.geometry("+{}+{}".format(x, y))
         self.setup_surfaces()
 
     def run(self):
