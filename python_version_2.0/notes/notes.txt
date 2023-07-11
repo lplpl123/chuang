@@ -279,5 +279,10 @@ photosurface可以做些什么功能：
 这些最简单的功能
 还有奖励界面啥的还没做的
 一直卡在mainloop了，看来需要进行多线程编程了
+https://it.cha138.com/jingpin/show-2821817.html
+https://blog.csdn.net/weixin_43708622/article/details/107053182
+接下来的任务：
+  1. text标题要设置成和word一样的质感
+  2. 功能的完善
 
 创业 74 62 59 20

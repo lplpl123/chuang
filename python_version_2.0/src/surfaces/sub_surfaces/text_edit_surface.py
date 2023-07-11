@@ -29,22 +29,20 @@ class TextEditSurface():
         # done_button
         self.done_button = Label(self.text_inputs_frame, text='done', bg="white", fg="black", cursor='hand2')
         self.done_button.bind('<Button-1>', self.done_button_function)
-        self.done_button.bind('<Enter>', lambda event: mouse_slip_on_widget(event, self.done_button, '#b8f1ed'), add="+")
         self.done_button.bind('<Enter>', lambda event: expand(event, self.done_button), add="+")
-        self.done_button.bind('<Leave>', lambda event: mouse_slip_off_widget(event, self.done_button, 'black'), add="+")
         self.done_button.bind('<Leave>', lambda event: reduce(event, self.done_button), add="+")
         # menu
-        self.text_inputs_menu = Menu(self.root)
+        self.text_inputs_menu = Menu(self.root, activebackground='blue')
         self.file_functions = Menu(self.text_inputs_menu, tearoff="off")
         self.edit_functions = Menu(self.text_inputs_menu, tearoff="off")
         # file
         self.text_inputs_menu.add_cascade(label='file', menu=self.file_functions)
-        self.text_inputs_menu.add_cascade(label='edit', menu=self.edit_functions)
-        self.file_functions.add_command(label="new", command=self.new_file)
-        self.file_functions.add_command(label="open", command=self.open_file)
-        self.file_functions.add_command(label="save", command=self.save_file)
+        self.text_inputs_menu.add_cascade(label='edit', font=('微软雅黑', 15, 'normal'), menu=self.edit_functions)
+        self.file_functions.add_command(label="new", font=('微软雅黑', 10, 'normal'), command=self.new_file)
+        self.file_functions.add_command(label="open", font=('微软雅黑', 10, 'normal'), command=self.open_file)
+        self.file_functions.add_command(label="save", font=('微软雅黑', 10, 'normal'), command=self.save_file)
         self.file_functions.add_separator()
-        self.file_functions.add_command(label="exit", command=self.exit_edit_surface)
+        self.file_functions.add_command(label="exit", font=('微软雅黑', 10, 'normal'), command=self.exit_edit_surface)
         # edit
         self.edit_functions.add_command(label='cut', command=self.cut)
         self.edit_functions.add_command(label='copy', command=self.copy)

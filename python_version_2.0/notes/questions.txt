@@ -41,3 +41,6 @@
     text_widget.tag_add("font_1", *map(str, text_widget.tag_ranges("sel")))
     text_widget.tag_config("font_1", font=...)
     这将更改所选文本的字体。
+
+13. 设置标题的窗口样式
+    https://www.zhihu.com/question/389617349/answer/2657872229?utm_id=0
