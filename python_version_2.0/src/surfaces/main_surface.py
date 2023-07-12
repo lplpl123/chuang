@@ -165,7 +165,7 @@ class MainSurface:
     def loading_play_gif(self, index, root, widget, path, tol_frames, time=30):
         global loading_loop
         with Image.open(path + "/frame{}.png".format(index)) as img:
-            img = img.resize((int(widget['width']), int(widget['height'])))
+            img = img.resize((int(widget['width']/2), int(widget['height']/2)))
             image = ImageTk.PhotoImage(img)
         widget.config(image=image)
         widget.img = image
