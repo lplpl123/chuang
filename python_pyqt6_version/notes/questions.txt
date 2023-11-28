@@ -1,0 +1,5 @@
+1. pyqt layout实现控件切换
+    https://blog.csdn.net/weixin_43493804/article/details/121008603
+
+2. 为什么QPushButton的background-color不生效
+    https://blog.csdn.net/qq_31073871/article/details/79965015?spm=1001.2101.3001.6650.2&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-2-79965015-blog-120413285.235%5Ev38%5Epc_relevant_sort_base3&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-2-79965015-blog-120413285.235%5Ev38%5Epc_relevant_sort_base3&utm_relevant_index=5
